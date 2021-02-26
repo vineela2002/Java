@@ -1,52 +1,69 @@
-abstract class Shape
-{
-	int a, b;
-	abstract void printArea();
-}
-class Rectangle extends Shape
-{
-	public Rectangle(int x, int y)
-	{
-		a = x;
-		b = y;
-	}
-	public void printArea()
-	{
-		System.out.println("Rectangle Area => " + (a * b));
-	}
-}
-class Triangle extends Shape
-{
-	public Triangle(int x, int y)
-	{
-		a = x;
-		b = y;
-	}
-	public void printArea()
-	{
-		System.out.println("Triangle Area => " + (0.5 * a * b));
-	}
-} 
-class Circle extends Shape
-{
-	public Circle(int x)
-	{
-		a = x;
-	}
-	public void printArea()
-	{
-		System.out.println("Circle Area => " + (3.14 * a * a));
-	}
-}
-public class Experiment11{
-	public static void main(String[] args)
-	{
-		Rectangle R = new Rectangle(10,20);
-		Triangle T = new Triangle(5,10);
-		Circle C = new Circle(8);
-                R.printArea();
-		T.printArea();
-		C.printArea();
+package converter;
+import java.util.Random;
 
-		}
+class Thread1 extends Thread{
+    private String name;
+
+    public Thread1(String name) {
+        this.name = name;
+    }
+    public void run() {
+        Random rand = new Random();
+        try {
+            while(true) {
+                int val = rand.nextInt(10)+1;
+                System.out.println("Input value "+val);
+                if(val%2 == 0) {
+                        new Thread2("Thread2",val).start();
+                }
+                else {
+                        new Thread3("Thread3",val).start();
+                }
+                Thread.sleep(1000);
+            }
+        }
+        catch(InterruptedException ie) {
+            ie.printStackTrace();
+       }
+    }   
 }
+
+class Thread2 extends Thread{
+    public String name;
+    private int value;
+
+    public Thread2(String name,int value) {
+        super();
+        this.name = name;
+        this.value = value;
+    }
+    public void run() {
+        int result = value * value;
+        //int result = (int)Math.pow(value, 2); 
+       System.out.println(result);
+    }
+}
+class Thread3 extends Thread{
+    public String name;
+    private int value;
+
+    public Thread3(String name,int value) {
+        super();
+        this.name = name;
+        this.value = value;
+    }
+    public void run() {
+        int result = value * value * value;
+        System.out.println(result);
+    }
+}
+public class Experiment11 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        new Thread1("Thread1").start();
+    }
+
+}
+
+
